@@ -2,7 +2,7 @@ package me.shedaniel.betterloadingscreen;
 
 import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonGrammar;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.fabricmc.loader.api.FabricLoader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,9 +63,8 @@ public class BetterLoadingScreen {
         CONFIG = config;
     }
     
-    @ExpectPlatform
     private static Path getConfigDir() {
-        throw new AssertionError();
+        return FabricLoader.getInstance().getConfigDir();
     }
     
     public static void init() {

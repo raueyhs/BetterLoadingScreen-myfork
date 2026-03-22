@@ -220,12 +220,11 @@ public interface BackgroundRenderer {
             throw new IllegalArgumentException("name must be a string or a path");
         }
         int n = (int) (graphics.getScaledWidth() * 0.5D);
-        int s = (int) (graphics.getScaledHeight() * 0.5D);
+        int s = (int) (graphics.getScaledHeight() * 0.5D) - 20;
         double d = Math.min(graphics.getScaledWidth() * 0.75D, graphics.getScaledHeight()) * 0.25D;
         int t = (int) (d * 0.5D);
         double e = d * 4.0D;
         int u = (int) (e * 0.5D);
-        s -= 20;
         graphics.blit(n - u, s - t, u, (int) d, -0.0625F, 0.0F, 120, 60, 120, 120, color);
         graphics.blit(n, s - t, u, (int) d, 0.0625F, 60.0F, 120, 60, 120, 120, color);
     }

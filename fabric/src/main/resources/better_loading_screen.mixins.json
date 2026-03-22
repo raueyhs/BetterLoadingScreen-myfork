@@ -1,9 +1,9 @@
 {
   "required": true,
   "package": "me.shedaniel.betterloadingscreen.mixin.fabric",
-  "compatibilityLevel": "JAVA_16",
+  "refmap": "better_loading_screen.refmap.json",
+  "compatibilityLevel": "JAVA_21",
   "client": [
-    "MixinModelBakeryFabric",
     "MixinMinecraft",
     "MixinWindow"
   ],

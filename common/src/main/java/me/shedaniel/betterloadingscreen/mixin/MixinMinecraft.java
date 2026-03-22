@@ -65,7 +65,20 @@ public class MixinMinecraft implements MinecraftStub {
                 Window window = Minecraft.getInstance().getWindow();
                 int[] ax = new int[1];
                 int[] ay = new int[1];
-                GLFW.glfwGetWindowPos(window.getWindow(), ax, ay);
+                long handle = 0L;
+                try {
+                    var m = window.getClass().getMethod("getHandle");
+                    handle = (long) m.invoke(window);
+                } catch (Throwable ignored) {
+                    try {
+                        var m = window.getClass().getMethod("getWindow");
+                        handle = (long) m.invoke(window);
+                    } catch (Throwable ignored2) {
+                    }
+                }
+                if (handle != 0L) {
+                    GLFW.glfwGetWindowPos(handle, ax, ay);
+                }
                 window.windowedX = window.x = ax[0];
                 window.windowedY = window.y = ay[0];
                 window.windowedWidth = window.width = EarlyWindow.width;

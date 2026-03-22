@@ -1,15 +1,12 @@
 {
   "required": true,
   "package": "me.shedaniel.betterloadingscreen.mixin",
+  "refmap": "better_loading_screen.refmap.json",
   "plugin": "me.shedaniel.betterloadingscreen.BetterLoadingScreenCommonMixinPlugin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_21",
   "client": [
-    "MixinFont",
     "MixinLoadingOverlay",
     "MixinMinecraft",
-    "MixinModelBakery",
-    "MixinTextureAtlas",
-    "MixinStitcher",
     "MixinWindow"
   ],
   "mixins": [

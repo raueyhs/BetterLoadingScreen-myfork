@@ -17,7 +17,6 @@ import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.fabricmc.loader.impl.util.ExceptionUtil;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -31,8 +30,6 @@ import java.util.function.Supplier;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft {
-    @Shadow public abstract void clearLevel();
-    
     @Redirect(at = @At(
             value = "INVOKE",
             target = "Lnet/fabricmc/loader/impl/game/minecraft/Hooks;startClient(Ljava/io/File;Ljava/lang/Object;)V"

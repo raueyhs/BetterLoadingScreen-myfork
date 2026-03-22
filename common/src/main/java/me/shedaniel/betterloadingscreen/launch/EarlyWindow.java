@@ -1,9 +1,7 @@
 package me.shedaniel.betterloadingscreen.launch;
 
-import ca.weblite.objc.NSObject;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.sun.jna.Pointer;
 import me.shedaniel.betterloadingscreen.BetterLoadingScreen;
 import me.shedaniel.betterloadingscreen.BetterLoadingScreenClient;
 import me.shedaniel.betterloadingscreen.BetterLoadingScreenConfig;
@@ -16,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWNativeCocoa;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -174,7 +171,11 @@ public class EarlyWindow {
         thread = new Thread(() -> {
             GLFW.glfwMakeContextCurrent(window);
             GL.createCapabilities();
-            GL11.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            int bgColor = BetterLoadingScreenClient.renderer.getBackgroundColor() | 0xFF000000;
+            float r = ((bgColor >> 16) & 0xFF) / 255.0f;
+            float g = ((bgColor >> 8) & 0xFF) / 255.0f;
+            float b = (bgColor & 0xFF) / 255.0f;
+            GL11.glClearColor(r, g, b, 1.0f);
             while (running) {
                 try {
                     Runnable task;
@@ -292,20 +293,6 @@ public class EarlyWindow {
     }
     
     public static void toggleMacOSFullscreen(long l) {
-        getNsWindow(l).filter(EarlyWindow::isInMacOSKioskMode).ifPresent(EarlyWindow::toggleMacOSFullscreen);
-    }
-    
-    private static boolean isInMacOSKioskMode(NSObject nSObject) {
-        return ((Long) nSObject.sendRaw("styleMask", new Object[0]) & 16384L) == 16384L;
-    }
-    
-    private static void toggleMacOSFullscreen(NSObject nSObject) {
-        nSObject.send("toggleFullScreen:");
-    }
-    
-    private static Optional<NSObject> getNsWindow(long l) {
-        long m = GLFWNativeCocoa.glfwGetCocoaWindow(l);
-        return m != 0L ? Optional.of(new NSObject(new Pointer(m))) : Optional.empty();
     }
     
     public static void updateFBSize(IntConsumer width, IntConsumer height) {
